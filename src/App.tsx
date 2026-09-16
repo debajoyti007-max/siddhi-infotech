@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar/Navbar"
 import Hero from "./components/Hero/Hero"
+import HardwareShowcase from "./components/Showcase/HardwareShowcase"
 import Services from "./components/Services/Services"
 import Brands from "./components/Brands/Brands"
 import DiagnosticMatrix from "./components/Diagnostics/DiagnosticMatrix"
@@ -15,6 +16,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <HardwareShowcase />
         <Services />
         <Brands />
         <DiagnosticMatrix />
