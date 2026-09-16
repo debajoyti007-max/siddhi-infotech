@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar/Navbar"
 import Hero from "./components/Hero/Hero"
+import SchematicExplorer from "./components/SchematicExplorer/SchematicExplorer"
 import HardwareShowcase from "./components/Showcase/HardwareShowcase"
 import Services from "./components/Services/Services"
 import Brands from "./components/Brands/Brands"
@@ -12,10 +13,11 @@ import FloatingDock from "./components/FloatingDock/FloatingDock"
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#060608] text-zinc-100 relative selection:bg-violet-600/30 selection:text-violet-200">
+    <div className="min-h-screen bg-[#07070a] text-zinc-100 relative selection:bg-violet-600/30 selection:text-violet-200">
       <Navbar />
       <main>
         <Hero />
+        <SchematicExplorer />
         <HardwareShowcase />
         <Services />
         <Brands />
