@@ -1,7 +1,11 @@
 import { useState, type FormEvent } from "react"
 import { MapPin, Phone, MessageSquare, Clock, UserCheck, Send } from "lucide-react"
+import { useLanguage } from "../../context/LanguageContext"
+import { translations } from "../../i18n/translations"
 
 export default function Contact() {
+  const { lang } = useLanguage()
+  const t = translations[lang].contact
   const [customerName, setCustomerName] = useState("")
   const [deviceModel, setDeviceModel] = useState("")
   const [issueSummary, setIssueSummary] = useState("")
@@ -13,17 +17,17 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-[#07070a] border-t border-zinc-800 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-20 border-t border-zinc-800/80 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="text-xs font-mono uppercase tracking-wider text-blue-400 mb-1">
-            Shop Location &amp; Contact
+            {t.tag}
           </div>
           <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight">
-            Visit Our Shop in Chandani Chowk
+            {t.title}
           </h2>
           <p className="text-xs font-mono text-zinc-400 mt-1">
-            Walk-in directly or send us a message on WhatsApp before coming
+            {t.subtitle}
           </p>
         </div>
 
@@ -36,15 +40,15 @@ export default function Contact() {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-mono text-zinc-400 uppercase">Shop Address</div>
+                  <div className="text-xs font-mono text-zinc-400 uppercase">{t.addressTitle}</div>
                   <div className="text-base font-display font-bold text-white mt-0.5">
-                    20, Ganesh Chandra Avenue, Gate No. 6
+                    {t.address1}
                   </div>
                   <div className="text-xs font-mono text-blue-300 mt-0.5">
-                    Chandani Metro Station, Kolkata – 700013
+                    {t.address2}
                   </div>
                   <div className="text-xs text-zinc-400 mt-1.5 font-sans">
-                    Landmark: Directly outside Chandani Chowk Metro Gate 6.
+                    {t.landmark}
                   </div>
                 </div>
               </div>
@@ -55,9 +59,9 @@ export default function Contact() {
                     <UserCheck className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-[11px] font-mono text-zinc-400 uppercase">Technician</div>
-                    <div className="text-sm font-semibold text-white">Natvar Ji</div>
-                    <div className="text-xs text-zinc-400 font-sans">10+ Years Chip-Level Experience</div>
+                    <div className="text-[11px] font-mono text-zinc-400 uppercase">{t.techTitle}</div>
+                    <div className="text-sm font-semibold text-white">{t.techName}</div>
+                    <div className="text-xs text-zinc-400 font-sans">{t.techExp}</div>
                   </div>
                 </div>
 
@@ -66,9 +70,8 @@ export default function Contact() {
                     <Clock className="w-4 h-4" />
                   </div>
                   <div>
-                    <div className="text-[11px] font-mono text-zinc-400 uppercase">Shop Timings</div>
-                    <div className="text-sm font-semibold text-white">10:30 AM – 8:30 PM</div>
-                    <div className="text-xs text-zinc-400 font-sans">Mon to Sat (Sunday on Call)</div>
+                    <div className="text-[11px] font-mono text-zinc-400 uppercase">{t.timingsTitle}</div>
+                    <div className="text-sm font-semibold text-white">{t.timings}</div>
                   </div>
                 </div>
               </div>
@@ -93,7 +96,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Embedded Google Maps View */}
+            {/* Embedded Google Maps */}
             <div className="luxury-card rounded-2xl overflow-hidden h-60 border border-zinc-800">
               <iframe
                 title="Siddhi Infotech Location — Chandani Chowk Metro Gate 6"
@@ -110,18 +113,17 @@ export default function Contact() {
 
           {/* Form */}
           <div className="lg:col-span-6">
-            <div className="luxury-card rounded-2xl p-6 sm:p-7 border border-zinc-800 bg-[#090a10]">
-              <div className="text-xs font-mono uppercase text-blue-400 mb-1">Quick Message</div>
+            <div className="luxury-card rounded-2xl p-6 sm:p-7 border border-zinc-800 bg-[#090a10]/90">
               <h3 className="text-xl font-display font-bold text-white mb-1.5">
-                Tell Us Your Laptop Problem
+                {t.formTitle}
               </h3>
               <p className="text-xs text-zinc-400 font-sans mb-6">
-                Fill this simple form and it will open directly in WhatsApp to Natvar Ji.
+                {t.formSubtitle}
               </p>
 
               <form onSubmit={handleDispatch} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-mono text-zinc-400 mb-1.5">Your Name</label>
+                  <label className="block text-xs font-mono text-zinc-400 mb-1.5">{t.nameLabel}</label>
                   <input
                     type="text"
                     value={customerName}
@@ -133,28 +135,28 @@ export default function Contact() {
 
                 <div>
                   <label className="block text-xs font-mono text-zinc-400 mb-1.5">
-                    Laptop or Device Model
+                    {t.deviceLabel}
                   </label>
                   <input
                     type="text"
                     required
                     value={deviceModel}
                     onChange={(e) => setDeviceModel(e.target.value)}
-                    placeholder="e.g. Dell Inspiron 15, MacBook Air M1, HP Pavilion"
+                    placeholder="e.g. Dell Inspiron, MacBook Air M1, HP Pavilion"
                     className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 text-sm focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-mono text-zinc-400 mb-1.5">
-                    What Problem Is It Having?
+                    {t.issueLabel}
                   </label>
                   <textarea
                     rows={3}
                     required
                     value={issueSummary}
                     onChange={(e) => setIssueSummary(e.target.value)}
-                    placeholder="e.g. Not turning on, water spilled, lines on display, battery draining fast..."
+                    placeholder="e.g. Dead / not turning on, water damage, lines on screen..."
                     className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 text-sm focus:outline-none focus:border-blue-500 resize-none"
                   />
                 </div>
@@ -164,7 +166,7 @@ export default function Contact() {
                   className="w-full flex items-center justify-center gap-2 py-3.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-medium transition-colors cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
-                  <span>Send to Natvar Ji on WhatsApp</span>
+                  <span>{t.submitBtn}</span>
                 </button>
               </form>
             </div>

@@ -1,6 +1,11 @@
-﻿import { MessageSquare, Phone } from "lucide-react"
+import { MessageSquare, Phone } from "lucide-react"
+import { useLanguage } from "../../context/LanguageContext"
+import { translations } from "../../i18n/translations"
 
 export default function FloatingDock() {
+  const { lang } = useLanguage()
+  const t = translations[lang]
+
   return (
     <aside
       aria-label="Quick contact dock"
@@ -9,7 +14,7 @@ export default function FloatingDock() {
       {/* Live bench status pill */}
       <div className="hidden sm:flex items-center gap-2 pl-3 pr-2 py-1 text-[11px] font-mono text-zinc-300">
         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-        <span>Natvar Ji: Online</span>
+        <span>{t.dock.status}</span>
       </div>
 
       {/* Direct Call Button */}
@@ -30,9 +35,10 @@ export default function FloatingDock() {
         title="WhatsApp Natvar Ji"
       >
         <MessageSquare className="w-4 h-4" />
-        <span className="hidden sm:inline">WhatsApp Us</span>
+        <span className="hidden sm:inline">{t.dock.wa}</span>
       </a>
     </aside>
   )
 }
+
 

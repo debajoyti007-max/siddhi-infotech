@@ -1,34 +1,9 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import * as THREE from "three"
-import { RotateCw, Eye } from "lucide-react"
-
-interface Hotspot {
-  id: string
-  title: string
-  detail: string
-}
-
-const hotspots: Hotspot[] = [
-  {
-    id: "gpu",
-    title: "VGA & Graphics Chip",
-    detail: "BGA reballing & repair for lines on screen, blue screen, or gaming crashes.",
-  },
-  {
-    id: "pmic",
-    title: "Motherboard Power IC",
-    detail: "Short circuit repair for dead laptops that won't turn on or charge.",
-  },
-  {
-    id: "display",
-    title: "Screen & Display Cable",
-    detail: "Replacement & repair for black screen, dim backlight, or flickering display.",
-  },
-]
+import { RotateCw } from "lucide-react"
 
 export default function Interactive3DLaptop() {
   const mountRef = useRef<HTMLDivElement>(null)
-  const [activeHotspot, setActiveHotspot] = useState<Hotspot | null>(null)
 
   useEffect(() => {
     const mount = mountRef.current
@@ -346,47 +321,11 @@ export default function Interactive3DLaptop() {
         className="w-full h-full cursor-grab active:cursor-grabbing relative z-10"
       />
 
-      {/* Orbit Helper */}
-      <div className="absolute top-2 right-2 z-20 flex items-center gap-1.5 px-3 py-1 rounded-md bg-zinc-900/90 border border-zinc-800 text-[11px] font-mono text-zinc-400">
-        <RotateCw className="w-3.5 h-3.5 text-zinc-400" />
-        <span>360° Drag to inspect</span>
+      {/* Subtle Orbit Helper */}
+      <div className="absolute top-2 right-2 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/90 border border-zinc-800 text-[11px] font-mono text-zinc-400 backdrop-blur-md">
+        <RotateCw className="w-3 h-3 text-cyan-400" />
+        <span>360° Drag to rotate</span>
       </div>
-
-      {/* Real Hotspot Buttons */}
-      <div className="absolute bottom-2 left-2 right-2 z-20 flex flex-wrap gap-2 justify-center">
-        {hotspots.map((h) => {
-          const isSelected = activeHotspot?.id === h.id
-          return (
-            <button
-              key={h.id}
-              onClick={() => setActiveHotspot(isSelected ? null : h)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
-                isSelected
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "bg-zinc-900/90 text-zinc-300 border border-zinc-800 hover:text-white"
-              }`}
-            >
-              <Eye className="w-3.5 h-3.5 text-blue-400" />
-              <span>{h.title}</span>
-            </button>
-          )
-        })}
-      </div>
-
-      {/* Hotspot details card */}
-      {activeHotspot && (
-        <div className="absolute top-3 left-3 z-20 max-w-xs p-4 rounded-xl bg-zinc-900 border border-zinc-700 shadow-2xl animate-in fade-in duration-200">
-          <div className="text-[10px] font-mono text-blue-400 uppercase font-bold mb-1">
-            Common Repair
-          </div>
-          <div className="text-sm font-display font-bold text-white mb-1">
-            {activeHotspot.title}
-          </div>
-          <div className="text-xs text-zinc-300 font-sans leading-relaxed">
-            {activeHotspot.detail}
-          </div>
-        </div>
-      )}
     </div>
   )
 }
