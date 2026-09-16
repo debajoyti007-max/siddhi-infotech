@@ -5,15 +5,15 @@ import Brands from "./components/Brands/Brands"
 import Contact from "./components/Contact/Contact"
 import Footer from "./components/Footer/Footer"
 import FloatingDock from "./components/FloatingDock/FloatingDock"
-import HardwareBackground from "./components/Background/HardwareBackground"
+import StudioBackground from "./components/Background/StudioBackground"
 import { LanguageProvider } from "./context/LanguageContext"
 
 export default function App() {
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-[#07070a] text-zinc-100 relative selection:bg-blue-600/30 selection:text-blue-200">
-        {/* Floating Real Hardware Images Background */}
-        <HardwareBackground />
+      <div className="min-h-screen bg-[#06070a] text-zinc-100 relative selection:bg-blue-600/30 selection:text-blue-200">
+        {/* Luxury Studio Dark Atmospheric Background */}
+        <StudioBackground />
         <div className="relative z-10">
           <Navbar />
           <main>

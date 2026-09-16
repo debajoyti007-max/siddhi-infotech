@@ -1,4 +1,4 @@
-import Interactive3DLaptop from "./Interactive3DLaptop"
+import HeroLaptopShowcase from "./HeroLaptopShowcase"
 import { Phone, MessageSquare, ArrowRight } from "lucide-react"
 import { useLanguage } from "../../context/LanguageContext"
 import { translations } from "../../i18n/translations"
@@ -57,7 +57,7 @@ export default function Hero() {
 
           {/* Right Column: 3D Interactive Laptop */}
           <div className="lg:col-span-6 flex justify-center w-full">
-            <Interactive3DLaptop />
+            <HeroLaptopShowcase />
           </div>
         </div>
       </div>
