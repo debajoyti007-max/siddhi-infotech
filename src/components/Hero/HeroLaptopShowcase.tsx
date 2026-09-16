@@ -92,7 +92,7 @@ export default function HeroLaptopShowcase() {
             transformStyle: "preserve-3d",
           }}
         >
-          {/* VIEW A: Photorealistic Clean Open Laptop */}
+          {/* VIEW A: Ultra High-Res Clean Laptop */}
           <div
             className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${
               activeMode === "chassis"
@@ -102,14 +102,14 @@ export default function HeroLaptopShowcase() {
             style={{ transform: "translateZ(20px)" }}
           >
             <img
-              src={`${base}/laptop_hero_clean.png`}
+              src={`${base}/laptop_hero_ultra.png`}
               alt="Professional Laptop Service"
-              className="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(37,99,235,0.25)]"
+              className="max-h-full max-w-full object-contain filter drop-shadow-[0_20px_35px_rgba(37,99,235,0.3)]"
               draggable={false}
             />
           </div>
 
-          {/* VIEW B: Real Laptop Motherboard & GPU Chip Internals */}
+          {/* VIEW B: Ultra High-Res Genuine Apple Motherboard PCB */}
           <div
             className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out ${
               activeMode === "internals"
@@ -119,33 +119,33 @@ export default function HeroLaptopShowcase() {
             style={{ transform: "translateZ(20px)" }}
           >
             <img
-              src={`${base}/hw_motherboard.png`}
+              src={`${base}/motherboard_ultra.png`}
               alt="Laptop Motherboard PCB"
               className="max-h-[85%] max-w-[85%] object-contain rounded-2xl"
               draggable={false}
             />
           </div>
 
-          {/* FLOATING 3D BADGE 1 (Top-Right): BGA Chip Rework Badge */}
+          {/* FLOATING 3D BADGE 1 (Top-Right): Dedicated GPU Badge */}
           <div
             className="absolute top-2 right-2 sm:top-4 sm:right-4 z-20 flex items-center gap-2.5 px-3 py-2 rounded-2xl bg-zinc-950/90 border border-zinc-800/90 text-xs font-mono backdrop-blur-xl shadow-xl transition-transform duration-300"
             style={{
               transform: `translateZ(50px) translate(${tilt.x * 1.4}px, ${tilt.y * 1.4}px)`,
             }}
           >
-            <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-cyan-500/30 overflow-hidden flex items-center justify-center p-0.5">
+            <div className="w-9 h-7 rounded-lg bg-zinc-900 border border-cyan-500/30 overflow-hidden flex items-center justify-center p-0.5">
               <img
-                src={`${base}/hw_bga_processor.png`}
-                alt="BGA Rework"
+                src={`${base}/gpu_card_ultra.png`}
+                alt="GPU Rework"
                 className="w-full h-full object-contain"
               />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[11px] font-bold text-white tracking-tight">BGA Rework</span>
+                <span className="text-[11px] font-bold text-white tracking-tight">GPU &amp; BGA Lab</span>
               </div>
-              <div className="text-[10px] text-zinc-400">350°C Micro-Profile</div>
+              <div className="text-[10px] text-zinc-400">Infrared Rework Station</div>
             </div>
           </div>
 

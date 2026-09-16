@@ -6,14 +6,17 @@ import Contact from "./components/Contact/Contact"
 import Footer from "./components/Footer/Footer"
 import FloatingDock from "./components/FloatingDock/FloatingDock"
 import StudioBackground from "./components/Background/StudioBackground"
+import AnimeCyberBackground from "./components/Background/AnimeCyberBackground"
 import { LanguageProvider } from "./context/LanguageContext"
 
 export default function App() {
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-[#06070a] text-zinc-100 relative selection:bg-blue-600/30 selection:text-blue-200">
-        {/* Luxury Studio Dark Atmospheric Background */}
+        {/* Architectural Studio Grid & Atmospheric Glow */}
         <StudioBackground />
+        {/* 60FPS Video-Style Anime Cyber Motion Animation (Waves & Light Streams) */}
+        <AnimeCyberBackground />
         <div className="relative z-10">
           <Navbar />
           <main>

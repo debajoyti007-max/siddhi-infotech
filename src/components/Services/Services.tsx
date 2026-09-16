@@ -10,39 +10,39 @@ const serviceHardwareMeta: Record<
   { image: string; badge: string; glow: string; borderAccent: string }
 > = {
   motherboard: {
-    image: `${base}/hw_motherboard.png`,
+    image: `${base}/motherboard_ultra.png`,
     badge: "Power IC & Multi-Layer PCB",
-    glow: "rgba(6, 182, 212, 0.18)",
+    glow: "rgba(6, 182, 212, 0.22)",
     borderAccent: "group-hover:border-cyan-500/40",
   },
   macbook: {
     image: `${base}/hw_macbook.png`,
     badge: "Apple T2 & M-Series Logic",
-    glow: "rgba(99, 102, 241, 0.18)",
+    glow: "rgba(99, 102, 241, 0.22)",
     borderAccent: "group-hover:border-indigo-500/40",
   },
   vga: {
-    image: `${base}/hw_gpu.png`,
+    image: `${base}/gpu_card_ultra.png`,
     badge: "BGA Reballing & Solder Matrix",
-    glow: "rgba(245, 158, 11, 0.18)",
+    glow: "rgba(245, 158, 11, 0.22)",
     borderAccent: "group-hover:border-amber-500/40",
   },
   liquid: {
     image: `${base}/hw_microsoldering.png`,
     badge: "Ultrasonic Bath & Trace Repair",
-    glow: "rgba(16, 185, 129, 0.18)",
+    glow: "rgba(16, 185, 129, 0.22)",
     borderAccent: "group-hover:border-emerald-500/40",
   },
   desktop: {
-    image: `${base}/cpu_transparent.png`,
-    badge: "SMPS, VRM & Thermal Profile",
-    glow: "rgba(59, 130, 246, 0.18)",
+    image: `${base}/ram_ultra.png`,
+    badge: "SMPS, VRM & High-Speed RAM",
+    glow: "rgba(59, 130, 246, 0.22)",
     borderAccent: "group-hover:border-blue-500/40",
   },
   bios: {
     image: `${base}/storage_transparent.png`,
     badge: "SPI Flashing & Platter Extraction",
-    glow: "rgba(168, 85, 247, 0.18)",
+    glow: "rgba(168, 85, 247, 0.22)",
     borderAccent: "group-hover:border-purple-500/40",
   },
 }
