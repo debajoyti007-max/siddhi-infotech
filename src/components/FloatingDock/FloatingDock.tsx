@@ -1,4 +1,4 @@
-import { MessageSquare, Phone } from "lucide-react"
+﻿import { MessageSquare, Phone } from "lucide-react"
 
 export default function FloatingDock() {
   return (
@@ -30,8 +30,9 @@ export default function FloatingDock() {
         title="WhatsApp Natvar Ji"
       >
         <MessageSquare className="w-4 h-4" />
-        <span className="hidden sm:inline">WhatsApp Lab</span>
+        <span className="hidden sm:inline">WhatsApp Us</span>
       </a>
     </aside>
   )
 }
+

@@ -1,10 +1,9 @@
 import Navbar from "./components/Navbar/Navbar"
 import Hero from "./components/Hero/Hero"
-import SchematicExplorer from "./components/SchematicExplorer/SchematicExplorer"
-import HardwareShowcase from "./components/Showcase/HardwareShowcase"
 import Services from "./components/Services/Services"
 import Brands from "./components/Brands/Brands"
-import DiagnosticMatrix from "./components/Diagnostics/DiagnosticMatrix"
+import SchematicExplorer from "./components/SchematicExplorer/SchematicExplorer"
+import HowItWorks from "./components/HowItWorks/HowItWorks"
 import WhyUs from "./components/WhyUs/WhyUs"
 import Testimonials from "./components/Testimonials/Testimonials"
 import Contact from "./components/Contact/Contact"
@@ -13,15 +12,14 @@ import FloatingDock from "./components/FloatingDock/FloatingDock"
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#07070a] text-zinc-100 relative selection:bg-violet-600/30 selection:text-violet-200">
+    <div className="min-h-screen bg-[#07070a] text-zinc-100 relative selection:bg-blue-600/30 selection:text-blue-200">
       <Navbar />
       <main>
         <Hero />
-        <SchematicExplorer />
-        <HardwareShowcase />
         <Services />
         <Brands />
-        <DiagnosticMatrix />
+        <SchematicExplorer />
+        <HowItWorks />
         <WhyUs />
         <Testimonials />
         <Contact />

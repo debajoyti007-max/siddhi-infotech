@@ -1,43 +1,34 @@
-﻿import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import { RotateCw, Eye } from "lucide-react"
 
 interface Hotspot {
   id: string
   title: string
-  subtitle: string
-  pos: [number, number, number]
-  target: [number, number, number]
+  detail: string
 }
 
 const hotspots: Hotspot[] = [
   {
     id: "gpu",
-    title: "VGA & Dedicated GPU",
-    subtitle: "BGA Reballing · Cold Joint Solder Remediation",
-    pos: [1.2, 0.4, 0.2],
-    target: [1.2, 0.2, 0.2],
+    title: "VGA & Graphics Chip",
+    detail: "BGA reballing & repair for lines on screen, blue screen, or gaming crashes.",
   },
   {
     id: "pmic",
-    title: "Power Rail & PMIC",
-    subtitle: "Short-to-Ground Tracing · Capacitor Array Rework",
-    pos: [-1.4, 0.4, -0.4],
-    target: [-1.4, 0.2, -0.4],
+    title: "Motherboard Power IC",
+    detail: "Short circuit repair for dead laptops that won't turn on or charge.",
   },
   {
     id: "display",
-    title: "Retina / EDP Flex Interface",
-    subtitle: "Backlight Driver IC · High-Speed Signal Lines",
-    pos: [0, 1.8, -1.8],
-    target: [0, 1.6, -1.8],
+    title: "Screen & Display Cable",
+    detail: "Replacement & repair for black screen, dim backlight, or flickering display.",
   },
 ]
 
 export default function Interactive3DLaptop() {
   const mountRef = useRef<HTMLDivElement>(null)
   const [activeHotspot, setActiveHotspot] = useState<Hotspot | null>(null)
-  // ready
 
   useEffect(() => {
     const mount = mountRef.current
@@ -46,10 +37,9 @@ export default function Interactive3DLaptop() {
     const width = mount.clientWidth
     const height = mount.clientHeight
 
-    // Scene, Camera, Renderer
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100)
-    camera.position.set(0, 4.2, 7.8)
+    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100)
+    camera.position.set(0, 3.8, 7.5)
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setSize(width, height)
@@ -57,206 +47,209 @@ export default function Interactive3DLaptop() {
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = THREE.PCFSoftShadowMap
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.1
+    renderer.toneMappingExposure = 1.05
     mount.appendChild(renderer.domElement)
 
-    // Lighting (Industrial Studio Rig)
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.4)
-    keyLight.position.set(5, 8, 5)
+    // Studio Lighting
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2)
+    keyLight.position.set(4, 7, 5)
     keyLight.castShadow = true
-    keyLight.shadow.mapSize.width = 1024
-    keyLight.shadow.mapSize.height = 1024
-    keyLight.shadow.bias = -0.0005
     scene.add(keyLight)
 
-    const fillLight = new THREE.DirectionalLight(0xa855f7, 1.2)
-    fillLight.position.set(-6, 4, -3)
+    const fillLight = new THREE.DirectionalLight(0x94a3b8, 1.0)
+    fillLight.position.set(-5, 4, -2)
     scene.add(fillLight)
 
-    const cyanRim = new THREE.PointLight(0x38bdf8, 2.5, 20)
-    cyanRim.position.set(0, -2, -4)
-    scene.add(cyanRim)
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75)
     scene.add(ambientLight)
 
-    // Shadow Floor
-    const shadowFloorGeo = new THREE.PlaneGeometry(16, 16)
-    const shadowFloorMat = new THREE.ShadowMaterial({ opacity: 0.35 })
-    const shadowFloor = new THREE.Mesh(shadowFloorGeo, shadowFloorMat)
+    // Soft Shadow Floor
+    const shadowFloor = new THREE.Mesh(
+      new THREE.PlaneGeometry(14, 14),
+      new THREE.ShadowMaterial({ opacity: 0.28 })
+    )
     shadowFloor.rotation.x = -Math.PI / 2
-    shadowFloor.position.y = -0.05
+    shadowFloor.position.y = -0.02
     shadowFloor.receiveShadow = true
     scene.add(shadowFloor)
 
-    // Master Laptop Root Group
+    // Master Laptop Group
     const laptopGroup = new THREE.Group()
     scene.add(laptopGroup)
 
-    // Materials (Metallic Titanium & Dark Matte)
-    const metalMaterial = new THREE.MeshStandardMaterial({
-      color: 0x22242e,
-      metalness: 0.85,
-      roughness: 0.28,
+    // Realistic Matte Aluminum Material
+    const aluminumMaterial = new THREE.MeshStandardMaterial({
+      color: 0x2b2e38,
+      metalness: 0.82,
+      roughness: 0.32,
     })
 
     const keyboardDeckMat = new THREE.MeshStandardMaterial({
-      color: 0x161820,
-      metalness: 0.7,
-      roughness: 0.45,
+      color: 0x1a1c24,
+      metalness: 0.6,
+      roughness: 0.5,
     })
 
     const keyCapMat = new THREE.MeshStandardMaterial({
-      color: 0x0f1117,
+      color: 0x12141a,
       metalness: 0.2,
       roughness: 0.6,
     })
 
-    // 1. Lower Base Chassis
-    const baseGeo = new THREE.BoxGeometry(4.6, 0.16, 3.2)
-    const baseMesh = new THREE.Mesh(baseGeo, metalMaterial)
+    // Base Chassis
+    const baseMesh = new THREE.Mesh(
+      new THREE.BoxGeometry(4.6, 0.16, 3.2),
+      aluminumMaterial
+    )
     baseMesh.position.y = 0.08
     baseMesh.castShadow = true
     baseMesh.receiveShadow = true
     laptopGroup.add(baseMesh)
 
-    // Trackpad Inset
-    const trackpadGeo = new THREE.BoxGeometry(1.6, 0.02, 1.1)
-    const trackpadMat = new THREE.MeshStandardMaterial({
-      color: 0x2a2d3a,
-      metalness: 0.8,
-      roughness: 0.2,
-    })
-    const trackpad = new THREE.Mesh(trackpadGeo, trackpadMat)
+    // Trackpad
+    const trackpad = new THREE.Mesh(
+      new THREE.BoxGeometry(1.6, 0.02, 1.1),
+      new THREE.MeshStandardMaterial({ color: 0x353846, metalness: 0.75, roughness: 0.25 })
+    )
     trackpad.position.set(0, 0.17, 0.85)
     laptopGroup.add(trackpad)
 
-    // Keyboard Wells & Keys
-    const keyboardWellGeo = new THREE.BoxGeometry(4.0, 0.02, 1.6)
-    const keyboardWell = new THREE.Mesh(keyboardWellGeo, keyboardDeckMat)
+    // Keyboard Well
+    const keyboardWell = new THREE.Mesh(
+      new THREE.BoxGeometry(4.0, 0.02, 1.6),
+      keyboardDeckMat
+    )
     keyboardWell.position.set(0, 0.17, -0.45)
     laptopGroup.add(keyboardWell)
 
-    // Procedural Keycaps
+    // Individual Keycaps
     const keyRows = 5
     const keyCols = 14
-    const keyWidth = 0.22
-    const keyHeight = 0.04
-    const keyDepth = 0.22
-    const keySpacingX = 0.26
-    const keySpacingZ = 0.26
-
-    const keyGeo = new THREE.BoxGeometry(keyWidth, keyHeight, keyDepth)
+    const keyGeo = new THREE.BoxGeometry(0.22, 0.04, 0.22)
     const keysGroup = new THREE.Group()
 
     for (let r = 0; r < keyRows; r++) {
       for (let c = 0; c < keyCols; c++) {
         const key = new THREE.Mesh(keyGeo, keyCapMat)
         key.position.set(
-          (c - (keyCols - 1) / 2) * keySpacingX,
+          (c - (keyCols - 1) / 2) * 0.26,
           0.19,
-          -1.0 + r * keySpacingZ
+          -1.0 + r * 0.26
         )
         keysGroup.add(key)
       }
     }
     laptopGroup.add(keysGroup)
 
-    // 2. Display Assembly (Lid) with Hinge
+    // Display Lid Assembly
     const lidGroup = new THREE.Group()
-    lidGroup.position.set(0, 0.16, -1.6) // Hinge pivot position
+    lidGroup.position.set(0, 0.16, -1.6)
     laptopGroup.add(lidGroup)
 
-    const lidGeo = new THREE.BoxGeometry(4.6, 3.1, 0.12)
-    const lidMesh = new THREE.Mesh(lidGeo, metalMaterial)
+    const lidMesh = new THREE.Mesh(
+      new THREE.BoxGeometry(4.6, 3.1, 0.12),
+      aluminumMaterial
+    )
     lidMesh.position.set(0, 1.55, 0)
     lidMesh.castShadow = true
     lidGroup.add(lidMesh)
 
-    // Screen Bezel
-    const screenBezelGeo = new THREE.BoxGeometry(4.4, 2.9, 0.02)
-    const screenBezelMat = new THREE.MeshStandardMaterial({
-      color: 0x050508,
-      metalness: 0.95,
-      roughness: 0.1,
-    })
-    const screenBezel = new THREE.Mesh(screenBezelGeo, screenBezelMat)
+    // Bezel
+    const screenBezel = new THREE.Mesh(
+      new THREE.BoxGeometry(4.4, 2.9, 0.02),
+      new THREE.MeshStandardMaterial({ color: 0x08090d, metalness: 0.9, roughness: 0.2 })
+    )
     screenBezel.position.set(0, 1.55, 0.06)
     lidGroup.add(screenBezel)
 
-    // Screen Display Canvas Texture (Showing Real Motherboard Schematics)
+    // Realistic Screen Texture (Real Diagnostic Terminal, not AI sci-fi)
     const screenCanvas = document.createElement("canvas")
     screenCanvas.width = 1024
     screenCanvas.height = 680
     const ctx = screenCanvas.getContext("2d")!
 
-    // Draw high-precision engineering blueprint
-    ctx.fillStyle = "#07080d"
+    // Modern dark desktop wallpaper background
+    const bgGrad = ctx.createLinearGradient(0, 0, 1024, 680)
+    bgGrad.addColorStop(0, "#0f172a")
+    bgGrad.addColorStop(1, "#020617")
+    ctx.fillStyle = bgGrad
     ctx.fillRect(0, 0, 1024, 680)
 
-    // Grid lines
-    ctx.strokeStyle = "rgba(124, 58, 237, 0.15)"
-    ctx.lineWidth = 1
-    for (let x = 0; x < 1024; x += 32) {
-      ctx.beginPath()
-      ctx.moveTo(x, 0)
-      ctx.lineTo(x, 680)
-      ctx.stroke()
-    }
-    for (let y = 0; y < 680; y += 32) {
-      ctx.beginPath()
-      ctx.moveTo(0, y)
-      ctx.lineTo(1024, y)
-      ctx.stroke()
-    }
+    // Top menu bar
+    ctx.fillStyle = "rgba(255, 255, 255, 0.08)"
+    ctx.fillRect(0, 0, 1024, 38)
+    ctx.fillStyle = "#e2e8f0"
+    ctx.font = "bold 15px -apple-system, sans-serif"
+    ctx.fillText("Siddhi Infotech — Hardware Repair Console", 24, 25)
+    ctx.fillStyle = "#10b981"
+    ctx.fillText("Bench Online · Natvar Ji", 830, 25)
 
-    // Circuit traces
-    ctx.strokeStyle = "#38bdf8"
-    ctx.lineWidth = 2.5
+    // Window Box
+    ctx.fillStyle = "rgba(15, 23, 42, 0.85)"
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.12)"
+    ctx.lineWidth = 1.5
     ctx.beginPath()
-    ctx.moveTo(180, 340)
-    ctx.lineTo(380, 340)
-    ctx.lineTo(440, 260)
-    ctx.lineTo(620, 260)
-    ctx.lineTo(700, 380)
-    ctx.lineTo(860, 380)
+    ctx.roundRect(48, 64, 928, 560, 12)
+    ctx.fill()
     ctx.stroke()
 
-    // BGA Processor Core Die on Screen
-    ctx.fillStyle = "#1e1b4b"
-    ctx.strokeStyle = "#a855f7"
-    ctx.lineWidth = 3
-    ctx.fillRect(430, 220, 164, 164)
-    ctx.strokeRect(430, 220, 164, 164)
+    // Terminal dots
+    ctx.fillStyle = "#ef4444"
+    ctx.beginPath(); ctx.arc(76, 92, 6, 0, Math.PI * 2); ctx.fill()
+    ctx.fillStyle = "#f59e0b"
+    ctx.beginPath(); ctx.arc(98, 92, 6, 0, Math.PI * 2); ctx.fill()
+    ctx.fillStyle = "#10b981"
+    ctx.beginPath(); ctx.arc(120, 92, 6, 0, Math.PI * 2); ctx.fill()
 
-    ctx.fillStyle = "#ffffff"
-    ctx.font = "bold 18px monospace"
-    ctx.fillText("SIDDHI BGA REPAIR BENCH", 442, 280)
-    ctx.fillStyle = "#38bdf8"
+    // Title
+    ctx.fillStyle = "#94a3b8"
     ctx.font = "14px monospace"
-    ctx.fillText("STATUS: 100% OPERATIONAL", 442, 310)
-    ctx.fillStyle = "#a1a1aa"
-    ctx.font = "12px monospace"
-    ctx.fillText("CHANDANI METRO GATE 6 · KOLKATA", 442, 340)
+    ctx.fillText("hardware-test-report.log", 148, 97)
+
+    // Real terminal output lines
+    ctx.font = "16px monospace"
+    ctx.fillStyle = "#38bdf8"
+    ctx.fillText("> SIDDHI INFOTECH · 20 GANESH CHANDRA AVE, GATE 6, KOLKATA", 76, 150)
+
+    ctx.fillStyle = "#e2e8f0"
+    ctx.fillText("----------------------------------------------------------------", 76, 180)
+    ctx.fillText("MOTHERBOARD DIAGNOSTIC REPORT: Dell XPS / MacBook Logic Board", 76, 210)
+    ctx.fillText("----------------------------------------------------------------", 76, 240)
+
+    ctx.fillStyle = "#10b981"
+    ctx.fillText("[✓] 19.5V Main Power Rail Short ........... REMOVED (Replaced PMIC)", 76, 280)
+    ctx.fillText("[✓] Dedicated GPU Solder Joint ............ REBALLED (Infrared Station)", 76, 320)
+    ctx.fillText("[✓] USB-C 20V Power Delivery Negotiator ... RESTORED (Pass 20V 3.25A)", 76, 360)
+    ctx.fillText("[✓] Corroded Trace Deoxidation ............ ULTRASONIC CLEANED", 76, 400)
+    ctx.fillText("[✓] Thermal Resistance & Heatpipes ........ TESTED (Max Temp 64°C)", 76, 440)
+
+    ctx.fillStyle = "#e2e8f0"
+    ctx.fillText("----------------------------------------------------------------", 76, 480)
+    ctx.fillStyle = "#38bdf8"
+    ctx.fillText("STATUS: All Hardware Tests Passed. Repaired & Ready for Customer Handover.", 76, 520)
+    ctx.fillStyle = "#94a3b8"
+    ctx.fillText("Direct Contact: Natvar Ji (Phone / WhatsApp: 7890426115)", 76, 560)
 
     const screenTexture = new THREE.CanvasTexture(screenCanvas)
-    const screenMat = new THREE.MeshBasicMaterial({ map: screenTexture })
-    const screenMesh = new THREE.Mesh(new THREE.PlaneGeometry(4.2, 2.7), screenMat)
+    const screenMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(4.2, 2.7),
+      new THREE.MeshBasicMaterial({ map: screenTexture })
+    )
     screenMesh.position.set(0, 1.55, 0.08)
     lidGroup.add(screenMesh)
 
-    // Open laptop lid to an authentic 115-degree working angle
+    // Open lid to standard 115 degrees
     lidGroup.rotation.x = THREE.MathUtils.degToRad(-25)
 
-    // Initial positioning
-    laptopGroup.rotation.y = THREE.MathUtils.degToRad(-28)
+    // Initial rotation
+    laptopGroup.rotation.y = THREE.MathUtils.degToRad(-25)
     laptopGroup.rotation.x = THREE.MathUtils.degToRad(8)
 
-    // Smooth Orbit & Interaction
+    // Smooth Orbit Controls
     let isDragging = false
     let prevX = 0
     let prevY = 0
-    let targetRotY = THREE.MathUtils.degToRad(-28)
+    let targetRotY = THREE.MathUtils.degToRad(-25)
     let targetRotX = THREE.MathUtils.degToRad(8)
 
     const onMouseDown = (e: MouseEvent) => {
@@ -283,7 +276,7 @@ export default function Interactive3DLaptop() {
     window.addEventListener("mousemove", onMouseMove)
     window.addEventListener("mouseup", onMouseUp)
 
-    // Touch support for mobile
+    // Touch handlers
     let touchStartX = 0
     let touchStartY = 0
     const onTouchStart = (e: TouchEvent) => {
@@ -315,13 +308,10 @@ export default function Interactive3DLaptop() {
     }
     window.addEventListener("resize", onResize)
 
-    // ready
-
     let animId: number
     const animate = () => {
       animId = requestAnimationFrame(animate)
 
-      // Idle rotation when not interacting
       if (!isDragging) {
         targetRotY += 0.002
       }
@@ -356,50 +346,47 @@ export default function Interactive3DLaptop() {
         className="w-full h-full cursor-grab active:cursor-grabbing relative z-10"
       />
 
-      {/* Control overlay */}
-      <div className="absolute top-3 right-3 z-20 flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-950/80 border border-white/10 backdrop-blur-md text-[11px] font-mono text-zinc-400">
-        <RotateCw className="w-3.5 h-3.5 text-violet-400 animate-spin" style={{ animationDuration: "12s" }} />
-        <span className="hidden sm:inline">360° Orbit Drag to Inspect</span>
-        <span className="sm:hidden">Drag to Rotate</span>
+      {/* Orbit Helper */}
+      <div className="absolute top-2 right-2 z-20 flex items-center gap-1.5 px-3 py-1 rounded-md bg-zinc-900/90 border border-zinc-800 text-[11px] font-mono text-zinc-400">
+        <RotateCw className="w-3.5 h-3.5 text-zinc-400" />
+        <span>360° Drag to inspect</span>
       </div>
 
-      {/* Interactive Hardware Inspection Pills */}
-      <div className="absolute bottom-3 left-3 right-3 z-20 flex flex-wrap gap-2 justify-center">
+      {/* Real Hotspot Buttons */}
+      <div className="absolute bottom-2 left-2 right-2 z-20 flex flex-wrap gap-2 justify-center">
         {hotspots.map((h) => {
-          const isActive = activeHotspot?.id === h.id
+          const isSelected = activeHotspot?.id === h.id
           return (
             <button
               key={h.id}
-              onClick={() => setActiveHotspot(isActive ? null : h)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono transition-all backdrop-blur-md cursor-pointer ${
-                isActive
-                  ? "bg-violet-600 text-white border border-violet-400 shadow-lg shadow-violet-950/50"
-                  : "bg-zinc-950/80 text-zinc-300 border border-white/10 hover:border-violet-500/40 hover:text-white"
+              onClick={() => setActiveHotspot(isSelected ? null : h)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
+                isSelected
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "bg-zinc-900/90 text-zinc-300 border border-zinc-800 hover:text-white"
               }`}
             >
-              <Eye className="w-3.5 h-3.5 text-cyan-400" />
+              <Eye className="w-3.5 h-3.5 text-blue-400" />
               <span>{h.title}</span>
             </button>
           )
         })}
       </div>
 
-      {/* Active Hotspot Inspector Modal Pill */}
+      {/* Hotspot details card */}
       {activeHotspot && (
-        <div className="absolute top-3 left-3 z-20 max-w-xs p-3.5 rounded-xl bg-zinc-950/95 border border-violet-500/50 backdrop-blur-xl shadow-2xl animate-in fade-in duration-200">
-          <div className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 mb-1">
-            Component Inspection
+        <div className="absolute top-3 left-3 z-20 max-w-xs p-4 rounded-xl bg-zinc-900 border border-zinc-700 shadow-2xl animate-in fade-in duration-200">
+          <div className="text-[10px] font-mono text-blue-400 uppercase font-bold mb-1">
+            Common Repair
           </div>
           <div className="text-sm font-display font-bold text-white mb-1">
             {activeHotspot.title}
           </div>
-          <div className="text-xs font-mono text-zinc-400 leading-relaxed">
-            {activeHotspot.subtitle}
+          <div className="text-xs text-zinc-300 font-sans leading-relaxed">
+            {activeHotspot.detail}
           </div>
         </div>
       )}
     </div>
   )
 }
-
-
